@@ -100,3 +100,5 @@ data
 
 # Production configs and environment variables for production
 deploy/*production*
+*_initial.py
+

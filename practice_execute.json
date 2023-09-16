@@ -1,0 +1,125 @@
+"api get" ,
+
+{
+    "id": 1,
+    "name": "Sample Dress",
+    "description": "A beautiful dress",
+    "base_price": "49.99",
+    "category": {
+        "id": 1,
+        "name": "Clothing"
+    },
+    "attributes": [
+        {"attribute": 1, "color": "Red"},
+        {"attribute": 2, "size": "Large"},
+        {"attribute": 3, "count": "64"},
+        {"attribute": 4, "price": "22.00"}
+    ]
+}
+
+POST /api/products/create/
+{
+    "name": "Sample Dress",
+    "description": "A beautiful dress",
+    "variations": [
+        {
+            "attributes": [
+                {
+                    "title": "color",
+                    "values": [
+                        {"text": "Large", "price": 59.99},
+                        {"text": "Medium", "price": 54.99}
+                    ]
+                },
+                {
+                    "color": "Red",
+                    "values": [
+                        {"text": "Large", "price": 64.99},
+                        {"text": "Medium", "price": 59.99}
+                    ]
+                }
+            ]
+        }
+    ]
+}
+
+
+Create product
+blue_dress = Product.objects.create(name="Blue Dress", description="A beautiful blue dress", base_price=49.99)
+
+Create attributes
+
+color_attribute = Attribute.objects.create(name="Color")
+size_attribute = Attribute.objects.create(name="Size")
+
+Create attribute values
+blue_color = AttributeValue.objects.create(attribute=color_attribute, value="Blue")
+red_color = AttributeValue.objects.create(attribute=color_attribute, value="Red")
+
+size_l = AttributeValue.objects.create(attribute=size_attribute, value="L")
+size_m = AttributeValue.objects.create(attribute=size_attribute, value="M")
+size_xl = AttributeValue.objects.create(attribute=size_attribute, value="XL")
+
+Create product variations with associated attributes and prices
+
+blue_dress_blue_l = ProductVariation.objects.create(product=blue_dress, price=59.99)
+blue_dress_blue_l.attributes.add(blue_color, size_l)
+
+blue_dress_blue_m = ProductVariation.objects.create(product=blue_dress, price=64.99)
+blue_dress_blue_m.attributes.add(blue_color, size_m)
+
+blue_dress_blue_xl = ProductVariation.objects.create(product=blue_dress, price=69.99)
+blue_dress_blue_xl.attributes.add(blue_color, size_xl)
+
+
+
+
+
+
+"""
+class ProductCreateView(APIView):
+    def post(self, request):
+        serializer = ProductCreateSerializer(data=request.data)
+
+        if serializer.is_valid():
+            # Create the product
+            product = Product.objects.create(
+                name=serializer.validated_data['name'],
+                description=serializer.validated_data['description'],
+                base_price=serializer.validated_data['base_price'],
+            )
+
+            # Create attributes and their values
+            attributes = serializer.validated_data['attributes']
+            for attribute_data in attributes:
+                attribute_name = attribute_data['attribute']
+                attribute, created = Attribute.objects.get_or_create(name=attribute_name)
+                values = attribute_data.get('values', [])
+                for value_data in values:
+                    value_name = value_data.get('value')
+                    price = value_data.get('price')
+                    attribute_value, created = AttributeValue.objects.get_or_create(
+                        attribute=attribute,
+                        value=value_name
+                    )
+                    ProductVariation.objects.create(
+                        product=product,
+                        price=price,
+                    ).attributes.add(attribute_value)
+
+            return Response({"detail": "Product created successfully.", "product_id": product.id}, status=status.HTTP_201_CREATED)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+"""
+
+
+
+
+class SubcategoryViewSet(viewsets.ReadOnlyModelViewSet):
+    serializer_class = SubcategorySerializer
+
+    def get_queryset(self):
+        Filter subcategories of the "Clothes" category by its name
+        return Category.objects.filter(parent__name="Clothes")
+
+
