@@ -5,6 +5,7 @@ backports.zoneinfo==0.2.1
 certifi==2018.4.16
 chardet==3.0.4
 Django==4.2.5
+django-environ==0.11.2
 django-extensions==3.2.3
 django-rest-framework==0.1.0
 djangorestframework==3.14.0
@@ -17,6 +18,7 @@ mock==2.0.0
 more-itertools==4.1.0
 pbr==4.0.2
 pluggy==0.6.0
+psycopg2==2.9.7
 py==1.5.3
 pydotplus==2.0.2
 pyparsing==3.1.1

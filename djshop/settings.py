@@ -12,8 +12,15 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 
+import environ
+
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+env = environ.Env()
+# reading .env file
+environ.Env.read_env()
 
 
 # Quick-start development settings - unsuitable for production
@@ -78,8 +85,12 @@ WSGI_APPLICATION = 'djshop.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': env("PSQL_ENGINE"),
+        'NAME': env("PSQL_DATABASE"),
+        'USER': env("PSQL_USER"),
+        'PASSWORD': env("PSQL_PASSWORD"),
+        'HOST': env("PSQL_HOST"),
+        'PORT': env("PSQL_PORT"),
     }
 }
 
