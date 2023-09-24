@@ -1,7 +1,8 @@
 import pytest
 from rest_framework.test import APITestCase
 
-from ..models import Color
+from ..helper import generate_jwt_token
+from ..models import Color, User
 
 
 class TestColor(APITestCase):
@@ -13,6 +14,11 @@ class TestColor(APITestCase):
         cls.color2 = Color.objects.create(title='c2')
         cls.color3 = Color.objects.create(title='c3')
         cls.color4 = Color.objects.create(title='c4')
+        cls.user = User.objects.create_user(
+            title='parisa',
+            email='parisafarivash@gmail.com',
+            password='Mypassword',
+        )
 
     def test_list_color(self):
         """ This test get all colors
@@ -20,6 +26,9 @@ class TestColor(APITestCase):
         Returns:
             Colors
         """
+        self.jwt_token = generate_jwt_token(self.user.id)
+        self.client.force_authenticate(user=self.user, token=self.jwt_token)
+
         response = self.client.get(
             path='/api/colors/',
             content_type='application/json'

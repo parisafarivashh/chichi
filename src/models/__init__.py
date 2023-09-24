@@ -5,4 +5,5 @@ from .product import Product
 from .varient import Variant
 from .attribute import Attribute
 from .category import Category
+from .user import User
 

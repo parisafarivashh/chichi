@@ -1,12 +1,14 @@
 from rest_framework.filters import OrderingFilter
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import viewsets
+from rest_framework.permissions import IsAuthenticated
 
 from ..models import Color
 from ..serializers import ColorSerializer
 
 
 class ColorView(viewsets.ModelViewSet):
+    permission_classes = [IsAuthenticated]
     queryset = Color.objects.all()
     serializer_class = ColorSerializer
     filter_backends = [DjangoFilterBackend, OrderingFilter]
