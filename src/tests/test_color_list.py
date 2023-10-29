@@ -10,10 +10,10 @@ class TestColor(APITestCase):
     @classmethod
     @pytest.mark.django_db()
     def setUpTestData(cls):  # or setUp
-        cls.color1 = Color.objects.create(title='c1')
-        cls.color2 = Color.objects.create(title='c2')
-        cls.color3 = Color.objects.create(title='c3')
-        cls.color4 = Color.objects.create(title='c4')
+        cls.color1 = Color.objects.create(title='c1', slug='1')
+        cls.color2 = Color.objects.create(title='c2', slug='2')
+        cls.color3 = Color.objects.create(title='c3', slug='3')
+        cls.color4 = Color.objects.create(title='c4', slug='4')
         cls.user = User.objects.create_user(
             title='parisa',
             email='parisafarivash@gmail.com',

@@ -7,7 +7,7 @@ from ..helper import generate_jwt_token
 from ..models import User
 
 
-class TestColor(APITestCase):
+class TestCategory(APITestCase):
 
     @classmethod
     @pytest.mark.django_db
@@ -18,26 +18,26 @@ class TestColor(APITestCase):
             password='Mypassword',
         )
 
-    def test_create_color(self):
-        """ This test for creating color
+    def test_create_category(self):
+        """ This test for creating category
 
         Returns:
-            Color
+            Category
         """
         self.jwt_token = generate_jwt_token(self.user.id)
         self.client.force_authenticate(user=self.user, token=self.jwt_token)
 
         data = json.dumps({
-            "title": "blue",
-            "code": "FF00",
-            "slug": "blue",
+            "title": "Mobile",
+            "slug": "Mobile",
+            "parent": ""
         })
 
         response = self.client.post(
-            path='/api/colors/',
+            path='/api/categories/',
             data=data,
             content_type='application/json'
         )
         assert response.status_code == 201
         assert response.data['id'] is not None
-        assert response.data['title'] == 'blue'
+        assert response.data['title'] == 'Mobile'

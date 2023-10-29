@@ -7,5 +7,5 @@ class ColorSerializer(ModelSerializer):
 
     class Meta:
         model = Color
-        fields = ['id', 'title', 'code']
+        fields = ['id', 'title', 'code', 'slug']
 
