@@ -6,7 +6,7 @@ from rest_framework.response import Response
 
 from ..models import Category
 from ..permissions import IsAdmin
-from ..serializers.category import CategorySerializer, CategoryGetSerializer
+from ..serializers.category import CategorySerializer
 
 
 class CategoryView(generics.ListCreateAPIView):
@@ -23,7 +23,7 @@ class CategoryView(generics.ListCreateAPIView):
 
 class CategoryDetailView(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = [IsAuthenticated, IsAdmin]
-    serializer_class = CategoryGetSerializer
+    serializer_class = CategorySerializer
     queryset = Category.objects.all()
     lookup_field = 'slug'
 

@@ -4,7 +4,7 @@ import pytest
 from rest_framework.test import APITestCase
 
 from ..helper import generate_jwt_token
-from ..models import User
+from ..models import User, Category
 
 
 class TestCategory(APITestCase):
@@ -17,6 +17,12 @@ class TestCategory(APITestCase):
             email='parisafarivash@gmail.com',
             password='Mypassword',
         )
+        cls.category1 = Category.objects.create(
+            title='category1',
+            slug='category1',
+            parent=None,
+        )
+        cls.category1.save()
 
     def test_create_category(self):
         """ This test for creating category
@@ -30,7 +36,7 @@ class TestCategory(APITestCase):
         data = json.dumps({
             "title": "Mobile",
             "slug": "Mobile",
-            "parent": ""
+            "parent_id": self.category1.id,
         })
 
         response = self.client.post(
@@ -41,3 +47,15 @@ class TestCategory(APITestCase):
         assert response.status_code == 201
         assert response.data['id'] is not None
         assert response.data['title'] == 'Mobile'
+
+        response = self.client.get(
+            path='/api/categories/',
+        )
+        assert response.status_code == 200
+        assert len(response.data) == 1
+        assert response.data[0]['title'] == self.category1.title
+        assert response.data[0]['parent'] is None
+        assert response.data[0]['children'] is not None
+        assert response.data[0]['children'][0]['title'] == 'Mobile'
+        assert response.data[0]['children'][0]['parent']['id'] == \
+               response.data[0]['id']
