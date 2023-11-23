@@ -17,8 +17,6 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
-from src.views.user import RegisterView, MyTokenObtainPairView
-
 
 # jwt token django
 """
@@ -31,8 +29,7 @@ path('api/token/refresh/', jwt_views.TokenRefreshView.as_view(), name='token_ref
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/', include('src.urls')),
-    path('register', RegisterView.as_view(), name='register'),
-    path('token', MyTokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/', include('api.urls')),
+    path('', include('authorize.urls')),
 ]
 

@@ -23,8 +23,8 @@ var/
 *.egg-info/
 .installed.cfg
 *.egg
-
-# PyInstaller
+*u**/
+**/migrations/*
 #  Usually these files are written by a python script from a template
 #  before PyInstaller builds the exe, so as to inject date/other infos into it.
 *.manifest
@@ -97,8 +97,11 @@ data
 
 # pytest
 .pytest_cache
-
+db.sqlite3
+pytest.ini
 # Production configs and environment variables for production
 deploy/*production*
-*_initial.py
+photo/nationalCard/*
+media/*
+static/*
 

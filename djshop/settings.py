@@ -48,7 +48,8 @@ INSTALLED_APPS = [
     'django_extensions',
     'django_filters',
 
-    'src',
+    'api',
+    'authorize',
 ]
 
 
@@ -166,7 +167,7 @@ GRAPH_MODELS = {
   'group_models': True,
 }
 
-AUTH_USER_MODEL = 'src.user'
+AUTH_USER_MODEL = 'authorize.user'
 
 
 SIMPLE_JWT = {

@@ -50,6 +50,7 @@ class Command(BaseCommand):
                 if drop:
                     self.drop(cursor, database_name)
                     self.create(cursor, database_name)
+                self.create(cursor, database_name)
 
             elif subcommand == 'drop':
                 self.drop(cursor, database_name)
@@ -75,7 +76,7 @@ class Command(BaseCommand):
         try:
             cursor.execute(f'DROP DATABASE {database_name}')
             self.stdout.write(self.style.SUCCESS(
-                f'Database {database_name} Dropped Successfully'
+                f'Database `{database_name}` Dropped Successfully'
             ))
         except ProgrammingError as exc:
             self.stdout.write(

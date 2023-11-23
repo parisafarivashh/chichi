@@ -13,11 +13,6 @@ urlpatterns = [
     path('', include(router.urls)),
 
     path('categories/', CategoryView.as_view(), name='Create_list_category'),
-    path(
-        'categories/<slug:slug>/',
-        CategoryDetailView.as_view(),
-        name='detail_category'
-    )
-
+    path('categories/<slug:slug>/', CategoryDetailView.as_view(), name='detail_category')
 ]
 
