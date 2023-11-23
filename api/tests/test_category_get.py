@@ -2,7 +2,8 @@ import pytest
 from rest_framework.test import APITestCase
 
 from ..helper import generate_jwt_token
-from ..models import User, Category
+from ..models import Category
+from authorize.models import User
 
 
 class TestCategory(APITestCase):

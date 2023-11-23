@@ -5,7 +5,8 @@ from django.urls import reverse
 from ..serializers.category import CategorySerializer
 from ..views.category import CategoryView
 
-from ..models import User, Category
+from ..models import Category
+from authorize.models import User
 
 
 class CategoryViewTest(APITestCase):

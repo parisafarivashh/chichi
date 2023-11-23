@@ -4,7 +4,8 @@ import pytest
 from rest_framework.test import APITestCase
 
 from ..helper import generate_jwt_token
-from ..models import User, Category
+from ..models import Category
+from authorize.models import User
 
 
 class TestCategory(APITestCase):
@@ -13,8 +14,8 @@ class TestCategory(APITestCase):
     @pytest.mark.django_db
     def setUp(cls):
         cls.user = User.objects.create_user(
-            title='parisa',
-            email='parisafarivash@gmail.com',
+            title='test',
+            email='testuser@gmail.com',
             password='Mypassword',
         )
         cls.category1 = Category.objects.create(

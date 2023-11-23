@@ -2,7 +2,8 @@ import pytest
 from rest_framework.test import APITestCase
 
 from ..helper import generate_jwt_token
-from ..models import Color, User
+from ..models import Color
+from authorize.models import User
 
 
 class TestColor(APITestCase):
