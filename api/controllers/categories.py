@@ -10,8 +10,16 @@ from ..serializers.category import CategorySerializer
 
 
 class CategoryView(generics.ListCreateAPIView):
-    permission_classes = [IsAuthenticated, IsAdmin]
     serializer_class = CategorySerializer
+
+    def get_permissions(self):
+        # Your logic should be all here
+        if self.request.method == 'CREATE':
+            self.permission_classes = [IsAuthenticated, IsAdmin]
+        else:
+            self.permission_classes = []
+
+        return super(CategoryView, self).get_permissions()
 
     @transaction.atomic
     def dispatch(self, request, *args, **kwargs):
@@ -22,20 +30,22 @@ class CategoryView(generics.ListCreateAPIView):
 
 
 class CategoryDetailView(generics.RetrieveUpdateDestroyAPIView):
-    permission_classes = [IsAuthenticated, IsAdmin]
     serializer_class = CategorySerializer
     queryset = Category.objects.all()
     lookup_field = 'slug'
 
+    def get_permissions(self):
+        # Your logic should be all here
+        if self.request.method == 'GET':
+            self.permission_classes = []
+        else:
+            self.permission_classes = [IsAuthenticated, IsAdmin]
+
+        return super(CategoryDetailView, self).get_permissions()
+
     @transaction.atomic
     def dispatch(self, request, *args, **kwargs):
         return super().dispatch(request, *args, **kwargs)
-
-    def get(self, request, *args, **kwargs):
-        main_category = self.get_object()
-        categories = Category.objects.filter(parent=main_category)
-        serializer = self.serializer_class(instance=categories, many=True)
-        return Response(data=serializer.data, status=status.HTTP_200_OK)
 
     def delete(self, request, *args, **kwargs):
         main_category = self.get_object()
