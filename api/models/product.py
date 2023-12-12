@@ -1,5 +1,7 @@
+from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 
+from api.constants import MAX_RATE, MIN_RATE
 from api.models.mixins import ModifiedByMixin
 
 
@@ -25,6 +27,14 @@ class Product(ModifiedByMixin):
         null=False,
         blank=False,
         on_delete=models.PROTECT,
+    )
+    rate = models.IntegerField(
+        null=True,
+        blank=True,
+        validators=[
+            MaxValueValidator(MAX_RATE),
+            MinValueValidator(MIN_RATE),
+        ]
     )
     status = models.CharField(
         choices=ProductStatus.choices,

@@ -3,6 +3,7 @@ from rest_framework.routers import DefaultRouter
 
 from .controllers.categories import CategoryView, CategoryDetailView
 from .controllers.products import ProductView, ProductDetailView
+from .controllers.vote import VoteView
 
 
 router = DefaultRouter()
@@ -22,5 +23,7 @@ urlpatterns = [
         ProductDetailView.as_view(),
         name='detail_product',
     ),
+    path('products/<int:product_id>/votes', VoteView.as_view()),
+    path('products/<int:product_id>/votes/<int:id>', VoteView.as_view()),
 ]
 

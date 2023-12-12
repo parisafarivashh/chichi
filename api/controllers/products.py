@@ -26,6 +26,9 @@ class ProductView(generics.ListCreateAPIView):
     def get_queryset(self):
         return Product.objects.filter(status=Product.ProductStatus.ACTIVE)
 
+    def perform_create(self, serializer):
+        serializer.save(created_by=self.request.user)
+
 
 class ProductDetailView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = ProductSerializer

@@ -39,7 +39,6 @@ class TestProduct(APITransactionTestCase):
         data = json.dumps(dict(
             title='New product',
             description='this is description of product',
-            created_by_pk=self.admin_user.id,
         ))
 
         response = self.client.post(

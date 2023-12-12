@@ -1,3 +1,4 @@
-from .category import Category
-from .color import Color
+from .category import CategorySerializer
+from .color import ColorSerializer
+from .vote import VoteSerializer
 

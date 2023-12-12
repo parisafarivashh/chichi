@@ -1,0 +1,3 @@
+MAX_RATE = 5
+MIN_RATE = 0
+
