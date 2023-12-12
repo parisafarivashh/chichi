@@ -12,7 +12,6 @@ class ProductView(generics.ListCreateAPIView):
     serializer_class = ProductSerializer
 
     def get_permissions(self):
-        # Your logic should be all here
         if self.request.method == 'GET':
             self.permission_classes = []
         else:
