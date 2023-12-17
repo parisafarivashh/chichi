@@ -51,10 +51,11 @@ class TestCategory(APITransactionTestCase):
             path='/api/categories/',
         )
         assert response.status_code == 200
-        assert len(response.data) == 1
-        assert response.data[0]['title'] == self.category1.title
-        assert response.data[0]['parent'] is None
-        assert response.data[0]['children'] is not None
-        assert response.data[0]['children'][0]['title'] == 'Mobile'
-        assert response.data[0]['children'][0]['parent']['id'] == response.data[0]['id']
+        assert len(response.data['results']) == 1
+        for category in response.data['results']:
+            assert category['title'] == self.category1.title
+            assert category['parent'] is None
+            assert category['children'] is not None
+            assert category['children'][0]['title'] == 'Mobile'
+            assert category['children'][0]['parent']['id'] == category['id']
 

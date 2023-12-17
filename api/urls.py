@@ -2,6 +2,7 @@ from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 
 from .controllers.categories import CategoryView, CategoryDetailView
+from .controllers.comment import CommentView
 from .controllers.products import ProductView, ProductDetailView
 from .controllers.vote import VoteView
 
@@ -25,5 +26,16 @@ urlpatterns = [
     ),
     path('products/<int:product_id>/votes', VoteView.as_view()),
     path('products/<int:product_id>/votes/<int:id>', VoteView.as_view()),
+
+    path(
+        'products/<int:product_id>/comments/<int:id>',
+        CommentView.as_view(),
+        name='details_comment',
+    ),
+    path(
+        'products/<int:product_id>/comments',
+        CommentView.as_view(),
+        name='create_list_comment',
+    ),
 ]
 
