@@ -50,7 +50,7 @@ class CategoryDetailView(generics.RetrieveUpdateDestroyAPIView):
     def delete(self, request, *args, **kwargs):
         main_category = self.get_object()
         categories = Category.objects.filter(parent=main_category)
-        if categories.count == 0:
+        if categories.count() == 0:
             return super().delete(request, *args, **kwargs)
 
         error = {"category": ["Could Not Delete Parent Category"]}
