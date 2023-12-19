@@ -4,10 +4,10 @@ from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import generics
 from rest_framework.exceptions import NotFound
 from rest_framework.filters import SearchFilter, OrderingFilter
-from rest_framework.pagination import LimitOffsetPagination
 from rest_framework.permissions import IsAuthenticated
 
 from ..models import Comment, Product
+from ..permissions import IsCommentOwnerOrReadOnly
 from ..serializers.comment import CommentSerializer
 
 
@@ -29,11 +29,11 @@ class CommentView(
 
     def get_object(self):
         comment = Comment.objects \
-            .filter(created_by=self.request.user) \
             .filter(product_id=self.kwargs['product_id']) \
             .filter(id=self.kwargs['id'])
 
         obj = get_object_or_404(comment)
+        self.check_object_permissions(self.request, obj)
         return obj
 
     def get_permissions(self):
@@ -41,7 +41,7 @@ class CommentView(
         if self.request.method == 'GET':
             self.permission_classes = []
         else:
-            self.permission_classes = [IsAuthenticated]
+            self.permission_classes = [IsAuthenticated, IsCommentOwnerOrReadOnly]
 
         return super(CommentView, self).get_permissions()
 
@@ -66,5 +66,10 @@ class CommentView(
             product = Product.objects.get(id=self.kwargs.get('product_id'))
         except Product.DoesNotExist:
             raise NotFound
-        serializer.save(created_by=self.request.user, product=product)
+
+        if not self.request.user.is_admin:
+            # Remove 'is_approved' field from data for non-admin users
+            if 'is_approved' in serializer.validated_data:
+                del serializer.validated_data['is_approved']
+        serializer.save(product=product)
 

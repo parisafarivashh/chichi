@@ -8,12 +8,7 @@ class CommentSerializer(ModelSerializer):
     class Meta:
         model = Comment
         fields = ['id', 'body', 'is_approved', 'created_by', 'product']
-
-        extra_kwargs = {
-            'is_approved': {'required': False},
-            'created_by': {'required': False},
-            'product': {'required': False},
-        }
+        read_only_fields = ['created_by', 'product']
 
         def create(self, validated_data):
             # Make the field not required for updates
