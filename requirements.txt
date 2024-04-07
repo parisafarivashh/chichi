@@ -33,4 +33,6 @@ uritemplate==4.1.1
 urllib3==2.0.6
 djangorestframework_camel_case
 django-filter==23.5
+django-extensions==3.2.3
+djangorestframework-camel-case==1.4.2
 

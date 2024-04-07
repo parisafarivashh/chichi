@@ -37,6 +37,7 @@ class Product(ModifiedByMixin):
         ]
     )
     status = models.CharField(
+        max_length=12,
         choices=ProductStatus.choices,
         default=ProductStatus.ACTIVE,
     )
