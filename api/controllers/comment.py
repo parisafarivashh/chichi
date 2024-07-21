@@ -55,17 +55,11 @@ class CommentView(
         return Comment.objects.filter(is_approved=True)
 
     def perform_create(self, serializer):
-        try:
-            product = Product.objects.get(id=self.kwargs.get('product_id'))
-        except Product.DoesNotExist:
-            raise NotFound
+        product = get_object_or_404(Product, id=self.kwargs['product_id'])
         serializer.save(created_by=self.request.user, product=product)
 
     def perform_update(self, serializer):
-        try:
-            product = Product.objects.get(id=self.kwargs.get('product_id'))
-        except Product.DoesNotExist:
-            raise NotFound
+        product = get_object_or_404(Product, id=self.kwargs['product_id'])
 
         if not self.request.user.is_admin:
             # Remove 'is_approved' field from data for non-admin users
