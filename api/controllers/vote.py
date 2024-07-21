@@ -26,5 +26,5 @@ class VoteView(
             .aggregate(sum_rate=Sum('rate'), count_vote=Count('id'))
 
         product.rate = rates['sum_rate'] / rates['count_vote']
-        product.save()
+        product.save(update_fields=['rate'])
 
