@@ -91,9 +91,6 @@ REST_FRAMEWORK = {
         'djangorestframework_camel_case.parser.CamelCaseJSONParser',
         # Any other parsers
     ),
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
-    ),
     'DEFAULT_FILTER_BACKENDS': (
         'django_filters.rest_framework.DjangoFilterBackend',
     ),
@@ -101,8 +98,15 @@ REST_FRAMEWORK = {
         'rest_framework.pagination.LimitOffsetPagination',
         'PAGE_SIZE': 100
     ,
-
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ],
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTTokenUserAuthentication',
+    )
 }
+
+SIMPLE_JWT = {"SIGNING_KEY": "5ahp8kseKOVB_w"}
 
 
 # Database
