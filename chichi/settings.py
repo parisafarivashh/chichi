@@ -118,8 +118,8 @@ DATABASES = {
         'NAME': 'chichi',
         'USER': 'postgres',
         'PASSWORD': 'postgres',
-        'HOST': 'localhost',
-        'PORT': '',
+        'HOST': 'db',
+        'PORT': '5432',
         'MIGRATE': False
     },
     'administrative': {
